@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="tovarych">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Создание каталога</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css?family=Montserrat:wght@200;500&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Montserrat', sans-serif; 
+            font-weight: 200;
+            color: var(--tg-theme-text-color);
+            background: var(--tg-theme-bg-color);
+        }
+
+        #main {
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            margin-top: 50px; margin-bottom: 10px;
+        }
+
+        img {
+            width: 70px;
+            margin: 30px auto;
+        }
+
+        p {
+            width: 350px;
+            margin: 0 auto;
+        }
+
+        button {
+            border: 0;
+            border-radius: 5px;
+            margin-top: 50px;
+            height: 60px;
+            width: 200px;
+            font-size: 20px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 500ms ease;
+            color: var(--tg-theme-button-color);
+            background: var(--tg-theme-button-text-color);
+        }
+
+        button:hover {
+            background: var(--tg-theme-secondary-bg-color);
+        }
+    </style>
+</head>
+<body>
+    <div id="main">
+        <h1>Телеграм бот</h1>
+        <h1>для создания каталогов</h1>
+        <img src="https://sun9-73.userapi.com/impg/UfSsE0Bv4IXVI9qFqzBaWRl1N-nUAZMywB8LaQ/HtfDB5rzguc.jpg?size=640x640&quality=95&sign=28518d5677829b158c542991ab98c95d&type=album">
+        <p>Нажмите на кнопку для создания каталога</p>
+        <button id="create">Создать</button>
+    </div>
+    </body>
+    <script src="https://telegram.org/js/telegram-web-app.js">
+
+    </script>
+</body>
+</html>
+
