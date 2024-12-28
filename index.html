@@ -27,6 +27,11 @@
             text-align: center;
         }
 
+        #form {
+            display: none;
+            text-align: center;
+        }
+
         h1 {
             margin-top: 50px; margin-bottom: 10px;
         }
@@ -68,10 +73,34 @@
         <p>Нажмите на кнопку для создания каталога</p>
         <button id="create">Создать</button>
     </div>
-    </body>
-    <script src="https://telegram.org/js/telegram-web-app.js">
+    <form id="form">
+        <input type="text" placeholder="Название каталога" id="shop_name">
+        <input type="text" placeholder="Ваш канал" id="shop_channal">
+        <input type="text" placeholder="Ваш телеграмм" id="shop_contact">
+        <input type="text" placeholder="Ваш город" id="shop_town">
+        <input type="text" placeholder="Фильтр" id="shop_filter">
+        <input type="text" placeholder="Ссылка на ваше изображение" id="shop_url">
+        <input type="text" placeholder="Описание каталога" id="shop_info">
+        <button id="order">Создать</button>
+    </form>
 
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script>
+        let tg = window.Telegram.WebApp;
+        let create = document.getElementById("create");
+        let order = document.getElementById("order");
+
+        create.addEventListener("click", () => {
+            document.getElementById("main").style.display = "none";
+            document.getElementById("form").style.display = "block";
+            document.getElementById("shop_contact").value = tg.initDataUnsafe.user.username;
+        });
+
+        order.addEventListener("click", () => {
+            tg.close();
+        });
     </script>
+
 </body>
 </html>
 
