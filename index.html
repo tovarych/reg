@@ -89,7 +89,8 @@
         let tg = window.Telegram.WebApp;
         let create = document.getElementById("create");
         let order = document.getElementById("order");
-
+        tg.expand();
+        
         create.addEventListener("click", () => {
             document.getElementById("main").style.display = "none";
             document.getElementById("form").style.display = "block";
@@ -97,6 +98,47 @@
         });
 
         order.addEventListener("click", () => {
+            document.getElementById("error").innerText = '';
+            let shop_name = document.getElementById("shop_contact").value;
+            let shop_channal = document.getElementById("shop_channal").value;
+            let shop_contact = document.getElementById("shop_contact").value;
+            let shop_town = document.getElementById("shop_town").value;
+            let shop_filter = document.getElementById("shop_filter").value;
+            let shop_url = document.getElementById("shop_url").value;
+            let shop_info = document.getElementById("shop_info").value;
+
+            if (shop_name.Length < 5) {
+                document.getElementById("error").innerText = 'Ошибка в имени. Слишком короткое';
+                return;
+            }
+
+            if (shop_name.Length > 70) {
+                document.getElementById("error").innerText = 'Ошибка в имени. Слишком длинное';
+                return;
+            }
+
+            if (shop_channal > 70) {
+                document.getElementById("error").innerText = 'Ошибка в канале. Слишком длинное';
+                return;
+            }
+
+            if (shop_info > 500) {
+                document.getElementById("error").innerText = 'Ошибка в описании. Слишком длинное';
+                return;
+            }
+            
+            let data = {
+                shop_name: shop_name,
+                shop_channal: shop_channal,
+                shop_contact: shop_contact,
+                shop_town: shop_town,
+                shop_filter: shop_filter,
+                shop_url: shop_url,
+                shop_info: shop_info,
+            };
+
+            tg.sendData(JSON.stringify(data));
+
             tg.close();
         });
     </script>
