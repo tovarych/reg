@@ -1,147 +1,52 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="tovarych">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Создание каталога</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css?family=Montserrat:wght@200;500&display=swap');
-        
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
-            font-family: 'Montserrat', sans-serif; 
-            font-weight: 200;
-            color: var(--tg-theme-text-color);
-            background: var(--tg-theme-bg-color);
-        }
-
-        #main {
-            width: 100%;
+            font-family: Arial, sans-serif;
+            text-align: center;
             padding: 20px;
-            text-align: center;
-        }
-
-        #form {
-            display: none;
-            text-align: center;
-        }
-
-        h1 {
-            margin-top: 50px; margin-bottom: 10px;
-        }
-
-        img {
-            width: 70px;
-            margin: 30px auto;
-        }
-
-        p {
-            width: 350px;
-            margin: 0 auto;
         }
 
         button {
-            border: 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #0088cc;
+            color: white;
+            border: none;
             border-radius: 5px;
-            margin-top: 50px;
-            height: 60px;
-            width: 200px;
-            font-size: 20px;
-            font-weight: 500;
             cursor: pointer;
-            transition: all 500ms ease;
-            color: var(--tg-theme-button-color);
-            background: var(--tg-theme-button-text-color);
         }
 
         button:hover {
-            background: var(--tg-theme-secondary-bg-color);
+            background-color: #005f88;
         }
     </style>
 </head>
 <body>
-    <div id="main">
-        <h1>Телеграм бот</h1>
-        <h1>для создания каталогов</h1>
-        <img src="https://sun9-73.userapi.com/impg/UfSsE0Bv4IXVI9qFqzBaWRl1N-nUAZMywB8LaQ/HtfDB5rzguc.jpg?size=640x640&quality=95&sign=28518d5677829b158c542991ab98c95d&type=album">
-        <p>Нажмите на кнопку для создания каталога</p>
-        <button id="create">Создать</button>
-    </div>
-    <form id="form">
-        <input type="text" placeholder="Название каталога" id="shop_name">
-        <input type="text" placeholder="Ваш канал" id="shop_channal">
-        <input type="text" placeholder="Ваш телеграмм" id="shop_contact">
-        <input type="text" placeholder="Ваш город" id="shop_town">
-        <input type="text" placeholder="Фильтр" id="shop_filter">
-        <input type="text" placeholder="Ссылка на ваше изображение" id="shop_url">
-        <input type="text" placeholder="Описание каталога" id="shop_info">
-        <button id="order">Создать</button>
-    </form>
+    <h1>Welcome to Telegram Web App</h1>
+    <p>Click the button below to get user data from Telegram.</p>
+    <button id="getUser">Get User Data</button>
+    <pre id="userData" style="margin-top: 20px; text-align: left;"></pre>
 
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <script>
-        let tg = window.Telegram.WebApp;
-        let create = document.getElementById("create");
-        let order = document.getElementById("order");
-        tg.expand();
-        
-        create.addEventListener("click", () => {
-            document.getElementById("main").style.display = "none";
-            document.getElementById("form").style.display = "block";
-        });
+        // Ensure Telegram WebApp is loaded
+        const tg = window.Telegram.WebApp;
+        tg.ready();
 
-        order.addEventListener("click", () => {
-            document.getElementById("error").innerText = '';
-            let shop_name = document.getElementById("shop_contact").value;
-            let shop_channal = document.getElementById("shop_channal").value;
-            let shop_contact = document.getElementById("shop_contact").value;
-            let shop_town = document.getElementById("shop_town").value;
-            let shop_filter = document.getElementById("shop_filter").value;
-            let shop_url = document.getElementById("shop_url").value;
-            let shop_info = document.getElementById("shop_info").value;
+        document.getElementById('getUser').addEventListener('click', () => {
+            const user = tg.initDataUnsafe.user;
 
-            if (shop_name.Length < 5) {
-                document.getElementById("error").innerText = 'Ошибка в имени. Слишком короткое';
-                return;
+            if (user) {
+                document.getElementById('userData').textContent = JSON.stringify(user, null, 2);
+            } else {
+                document.getElementById('userData').textContent = "No user data available. Make sure you open this app through Telegram.";
             }
-
-            if (shop_name.Length > 70) {
-                document.getElementById("error").innerText = 'Ошибка в имени. Слишком длинное';
-                return;
-            }
-
-            if (shop_channal > 70) {
-                document.getElementById("error").innerText = 'Ошибка в канале. Слишком длинное';
-                return;
-            }
-
-            if (shop_info > 500) {
-                document.getElementById("error").innerText = 'Ошибка в описании. Слишком длинное';
-                return;
-            }
-            
-            let data = {
-                shop_name: shop_name,
-                shop_channal: shop_channal,
-                shop_contact: shop_contact,
-                shop_town: shop_town,
-                shop_filter: shop_filter,
-                shop_url: shop_url,
-                shop_info: shop_info,
-            };
-
-            tg.sendData(JSON.stringify(data));
-
-            tg.close();
         });
     </script>
-
 </body>
 </html>
-
