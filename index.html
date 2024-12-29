@@ -8,13 +8,30 @@
     <style>
         body {
             font-family: Arial, sans-serif;
+            margin: 20px;
             text-align: center;
-            padding: 20px;
+        }
+
+        form {
+            margin-top: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
         }
 
         button {
             padding: 10px 20px;
-            font-size: 16px;
             background-color: #0088cc;
             color: white;
             border: none;
@@ -23,28 +40,39 @@
         }
 
         button:hover {
-            background-color: #005f88;
+            background-color: #005f99;
         }
     </style>
 </head>
 <body>
-    <h1>Welcome to Telegram Web App</h1>
-    <p>Click the button below to get user data from Telegram.</p>
-    <button id="getUser">Get User Data</button>
-    <pre id="userData" style="margin-top: 20px; text-align: left;"></pre>
+    <h1>Заполните форму</h1>
+    <form id="userForm">
+        <label for="name">Имя:</label>
+        <input type="text" id="name" name="name" placeholder="Введите ваше имя" required>
+
+        <label for="city">Город:</label>
+        <input type="text" id="city" name="city" placeholder="Введите ваш город" required>
+
+        <button type="button" id="submitButton">Отправить</button>
+    </form>
 
     <script>
-        // Ensure Telegram WebApp is loaded
+        // Инициализация Telegram Web App
         const tg = window.Telegram.WebApp;
-        tg.ready();
+        tg.expand(); // Расширение на весь экран
 
-        document.getElementById('getUser').addEventListener('click', () => {
-            const user = tg.initDataUnsafe.user;
+        const submitButton = document.getElementById('submitButton');
 
-            if (user) {
-                document.getElementById('userData').textContent = JSON.stringify(user, null, 2);
+        submitButton.addEventListener('click', () => {
+            const name = document.getElementById('name').value;
+            const city = document.getElementById('city').value;
+
+            if (name && city) {
+                // Отправляем данные в Telegram
+                tg.sendData(JSON.stringify({ name, city }));
+                alert('Данные отправлены: ' + name + ', ' + city);
             } else {
-                document.getElementById('userData').textContent = "No user data available. Make sure you open this app through Telegram.";
+                alert('Пожалуйста, заполните все поля.');
             }
         });
     </script>
